@@ -290,7 +290,7 @@ function Get-WindowsIso($name, $destinationDirectory) {
     # patch the uup-converter configuration.
     # see the ConvertConfig $buildDirectory/ReadMe.html documentation.
     # see https://github.com/abbodi1406/BatUtil/tree/master/uup-converter-wimlib
-    $tags = ''
+    $tags = $null
     $convertConfig = (Get-Content $buildDirectory/ConvertConfig.ini) `
         -replace '^(AutoExit\s*)=.*','$1=1' `
         -replace '^(ResetBase\s*)=.*','$1=1' `
