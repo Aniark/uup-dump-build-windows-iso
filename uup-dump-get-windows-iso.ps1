@@ -296,12 +296,12 @@ function Get-WindowsIso($name, $destinationDirectory) {
         -replace '^(Cleanup\s*)=.*','$1=1'
     if ($esd) {
         $convertConfig = $convertConfig -replace '^(wim2esd\s*)=.*', '$1=1'
-        if ($tags) {
-            $tags = $tags + '.ESD'
-        }
-        else {
-            $tags = '.ESD'
-        }
+    }
+    if ($drivers) {
+        $convertConfig = $convertConfig -replace '^(AddDrivers\s*)=.*', '$1=1'
+    }
+    if ($netfx3) {
+        $convertConfig = $convertConfig -replace '^(NetFx3\s*)=.*', '$1=1'
     }
     if ($iso.virtualEdition) {
         $convertConfig = $convertConfig `
@@ -352,7 +352,6 @@ function Get-WindowsIso($name, $destinationDirectory) {
                 build = $iso.build
                 version = $verbuild
                 checksum = $isoChecksum
-                tags = $tags
                 images = @($windowsImages)
                 uupDump = @{
                     id = $iso.id
