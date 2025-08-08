@@ -290,18 +290,22 @@ function Get-WindowsIso($name, $destinationDirectory) {
     # patch the uup-converter configuration.
     # see the ConvertConfig $buildDirectory/ReadMe.html documentation.
     # see https://github.com/abbodi1406/BatUtil/tree/master/uup-converter-wimlib
+    $tags = ''
     $convertConfig = (Get-Content $buildDirectory/ConvertConfig.ini) `
         -replace '^(AutoExit\s*)=.*','$1=1' `
         -replace '^(ResetBase\s*)=.*','$1=1' `
         -replace '^(Cleanup\s*)=.*','$1=1'
     if ($esd) {
         $convertConfig = $convertConfig -replace '^(wim2esd\s*)=.*', '$1=1'
+        $tags = $tags + '.ESD'
     }
     if ($drivers) {
         $convertConfig = $convertConfig -replace '^(AddDrivers\s*)=.*', '$1=1'
+        $tags = tags + '.DRIVERS'
     }
     if ($netfx3) {
         $convertConfig = $convertConfig -replace '^(NetFx3\s*)=.*', '$1=1'
+        $tags = $tags + '.NETFX3'
     }
     if ($iso.virtualEdition) {
         $convertConfig = $convertConfig `
@@ -352,6 +356,7 @@ function Get-WindowsIso($name, $destinationDirectory) {
                 build = $iso.build
                 version = $verbuild
                 checksum = $isoChecksum
+                tags = $taga
                 images = @($windowsImages)
                 uupDump = @{
                     id = $iso.id
