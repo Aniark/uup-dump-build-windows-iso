@@ -23,48 +23,48 @@ on:
         default: Pro
         required: true
       language:
-        description: "Language to add"
+        description: "Language"
         type: choice
         options:
-        - ar-sa
-        - bg-bg
-        - cs-cz
-        - da-dk
-        - de-de
-        - el-gr
-        - en-gb
-        - en-us
-        - es-es
-        - es-mx
-        - et-ee
-        - fi-fi
-        - fr-ca
-        - fr-fr
-        - he-il
-        - hr-hr
-        - hu-hu
-        - it-it
-        - ja-jp
-        - ko-kr
-        - lt-lt
-        - lv-lv
-        - nb-no
-        - nl-nl
-        - pl-pl
-        - pt-br
-        - pt-pt
-        - ro-ro
-        - ru-ru
-        - sk-sk
-        - sl-si
-        - sr-latn-rs
-        - sv-se
-        - th-th
-        - tr-tr
-        - uk-ua
-        - zh-cn
-        - zh-tw
-        default: en-us
+        - AR-SA
+        - BG-BG
+        - CS-CZ
+        - DA-DK
+        - DE-DE
+        - EL-GR
+        - EN-GB
+        - EN-US
+        - ES-ES
+        - ES-MX
+        - ET-EE
+        - FI-FI
+        - FR-CA
+        - FR-FR
+        - HE-IL
+        - HR-HR
+        - HU-HU
+        - IT-IT
+        - JA-JP
+        - KO-KR
+        - LT-LT
+        - LV-LV
+        - NB-NO
+        - NL-NL
+        - PL-PL
+        - PT-BR
+        - PT-PT
+        - RO-RO
+        - RU-RU
+        - SK-SK
+        - SL-SI
+        - SR-LATN-RS
+        - SV-SE
+        - TH-TH
+        - TR-TR
+        - UK-UA
+        - ZH-CN
+        - ZH-TW
+        default: EN-US
         required: true
       esd:
         description: "Use ESD compression"
