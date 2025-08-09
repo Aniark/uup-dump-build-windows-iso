@@ -45,7 +45,7 @@ $TARGETS = @{
     # see https://en.wikipedia.org/wiki/Windows_11
     # see https://en.wikipedia.org/wiki/Windows_11_version_history
     "windows-11" = @{
-        search = "windows 11 $(if (-not $preview) { '26100 ' } else { 'Insider Preview' })$arch" # aka 24H2.
+        search = "windows 11 $(if (-not $preview) { '26100 ' } else { '' })$arch" # aka 24H2.
         edition = $(if ($edition -eq "core" -or $edition -eq "home") { "Core" } elseif ($edition -eq "multi") { "Multi" } else { "Professional" })
         virtualEdition = $null
         ring = $(if ($preview) { "Canary" } else { $null })
@@ -93,13 +93,15 @@ function Get-UupDumpIso($name, $target) {
             $_
         } `
         | Where-Object {
-            # ignore previews when they are not explicitly requested.
-            $result = $target.search -like '*preview*' -or $_.Value.title -notlike '*preview*'
-            if (!$result) {
-                Write-Host "Skipping. Expected preview=false. Got preview=true."
+            if (!$preview) {
+                $result = $target.search -like '*preview*' -or $_.Value.title -notlike '*preview*'
+                if (-not $result) {
+                    Write-Host "Skipping. Expected preview=false. Got preview=true."
+                }
+                return $result
             }
-            $result
-        } `
+            return $true
+        }
         | ForEach-Object {
             # get more information about the build. eg:
             #   "langs": {
