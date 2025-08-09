@@ -134,7 +134,7 @@ jobs:
 
       - name: Build Windows 11 24H2
         if: ${{ inputs.versions == 'Windows 11 24H2' }}
-        run: pwsh uup-dump-get-windows-iso.ps1 windows-11 c:/output -architecture ${{ inputs.architecture }} -edition ${{ inputs.edition }} -lang ${{ inputs.language }} ${{ env.options }}
+        run: pwsh uup-dump-get-windows-iso.ps1 windows-11 c:/output -architecture ${{ inputs.architecture }} -edition ${{ inputs.edition }} -lang ${{ inputs.language }}${{ env.options }}
 
       - name: Build Windows 11 23H2
         if: ${{ inputs.versions == 'Windows 11 23H2' }}
