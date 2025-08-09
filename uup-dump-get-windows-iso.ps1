@@ -48,6 +48,7 @@ $TARGETS = @{
         search = "windows 11 $(if (-not $preview) { '26100 ' } else { '' })$arch" # aka 24H2.
         edition = $(if ($edition -eq "core" -or $edition -eq "home") { "Core" } elseif ($edition -eq "multi") { "Multi" } else { "Professional" })
         virtualEdition = $null
+        ring = $(if ($preview) { "Canary" } else { $null })
     }
 }
 
