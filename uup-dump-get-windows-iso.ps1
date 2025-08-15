@@ -135,7 +135,6 @@ function Get-UupDumpIso($name, $target) {
             $langs = $_.Value.langs.PSObject.Properties.Name
             
             $editions = if ($langs -contains $lang) {
-                Write-Host $lang
                 Write-Host "Getting the $name $id editions metadata"
                 $result = Invoke-UupDumpApi listeditions @{
                     id = $id
@@ -161,6 +160,7 @@ function Get-UupDumpIso($name, $target) {
             $result = $true
             $expectedRing = if ($target.PSObject.Properties.Name -contains 'ring') {
                 $target.ring
+                Write-Host $target.ring
             } else {
                 'RETAIL'
             }
