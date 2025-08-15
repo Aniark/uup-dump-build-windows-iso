@@ -26,6 +26,10 @@ trap {
 
 $arch = if ($architecture -eq "x64") { "amd64" } elseif ($architecture -eq "arm64") { "arm64" }
 
+if ($windowsTargetName -match "beta|dev|canary") { 
+     $preview = $true
+}
+
 $TARGETS = @{
     # see https://en.wikipedia.org/wiki/Windows_10
     # see https://en.wikipedia.org/wiki/Windows_10_version_history
@@ -55,7 +59,6 @@ $TARGETS = @{
         edition = $(if ($edition -eq "core" -or $edition -eq "home") { "Core" } elseif ($edition -eq "multi") { "Multi" } else { "Professional" })
         virtualEdition = $null
         ring = 'Beta'
-        preview = true
     }
     # see https://en.wikipedia.org/wiki/Windows_11
     # see https://en.wikipedia.org/wiki/Windows_11_version_history
@@ -64,7 +67,6 @@ $TARGETS = @{
         edition = $(if ($edition -eq "core" -or $edition -eq "home") { "Core" } elseif ($edition -eq "multi") { "Multi" } else { "Professional" })
         virtualEdition = $null
         ring = 'Dev'
-        preview = true
     }
     # see https://en.wikipedia.org/wiki/Windows_11
     # see https://en.wikipedia.org/wiki/Windows_11_version_history
@@ -73,7 +75,6 @@ $TARGETS = @{
         edition = $(if ($edition -eq "core" -or $edition -eq "home") { "Core" } elseif ($edition -eq "multi") { "Multi" } else { "Professional" })
         virtualEdition = $null
         ring = 'Canary'
-        preview = true
     }
 }
 
@@ -118,7 +119,7 @@ function Get-UupDumpIso($name, $target) {
             $_
         } `
         | Where-Object {
-            if (!$target.preview) {
+            if (!$preview) {
                 $result = $target.search -like '*preview*' -or $_.Value.title -notlike '*preview*'
                 if (-not $result) {
                     Write-Host "Skipping. Expected preview=false. Got preview=true."
@@ -272,7 +273,7 @@ function Get-IsoWindowsImages($isoPath) {
 
 function Get-WindowsIso($name, $destinationDirectory) {
     $iso = Get-UupDumpIso $name $TARGETS.$name
-    if (!$target.preview) {
+    if (!$preview) {
          if (-not ($iso.title -match 'version')) {
            throw "Unexpected title format: missing 'version'"
          }
