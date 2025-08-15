@@ -133,7 +133,9 @@ function Get-UupDumpIso($name, $target) {
                 info = $result.response.updateInfo
             }
             $langs = $_.Value.langs.PSObject.Properties.Name
+            
             $editions = if ($langs -contains $lang) {
+                Write-Host $lang
                 Write-Host "Getting the $name $id editions metadata"
                 $result = Invoke-UupDumpApi listeditions @{
                     id = $id
