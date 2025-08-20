@@ -132,6 +132,12 @@ jobs:
           pwsh uup-dump-get-windows-iso.ps1 ${{ (inputs.versions) == 'Windows 10 22H2' && ' windows-10 ' || (inputs.versions) == 'Windows 11 23H2' && ' windows-11old ' || (inputs.versions) == 'Windows 11 24H2' && ' windows-11 ' || (inputs.versions) == 'Windows 11 24H2 BETA' && ' windows-11beta ' || (inputs.versions) == 'Windows 11 25H2 DEV' && ' windows-11dev ' || (inputs.versions) == 'Windows 11 Canary' && ' windows-11canary ' }} c:/output -architecture ${{ inputs.architecture }} -edition ${{ inputs.edition }} -lang ${{ inputs.language }} ${{ env.options }}
           echo "iso_name=$env:ISO_NAME" >> $env:GITHUB_OUTPUT
 
+      - name: Create split zip
+        shell: pwsh
+        run: |
+          7z a -tzip -mx=0 -v1950M -bsp2 "c:/output/$($env:ISO_NAME).zip" "$((Get-Item -Path C:/output/*.ISO).FullName)"
+          Get-ChildItem "c:/output/$($env:ISO_NAME).zip.*" | Sort-Object Name | ForEach-Object { Write-Host "Created: $($_.FullName)" }
+
       - name: Upload artifact
         id: upload_artifact
         uses: actions/upload-artifact@v4
@@ -161,7 +167,11 @@ jobs:
             $finalImageName = $imageNames
           }
 
+          $parts = Get-ChildItem "C:/output/$($env:ISO_NAME).zip.0*" | Sort-Object Name
+          $partsList = ($parts | ForEach-Object { $_.Name }) -join '  <br/>'
+
           Add-Content $env:GITHUB_STEP_SUMMARY @"
+          ### FILE INFO:
           | Property | Value |
           | :--- | :--- |
           | Name | $finalImageName $($iso.version) |
@@ -173,7 +183,19 @@ jobs:
           | UUP dump | [$($iso.title)]($($iso.uupDump.downloadUrl)) |
           "@
 
-          (Get-Content $env:GITHUB_STEP_SUMMARY) | Set-Content summary.md
+          $rlsnfo = @"
+          
+          ## RELEASE INFO
+          > File is splitted because Github release limit filesize to 2G.
+          > You must download all files **$env:ISO_NAME.zip.xxx** *(where xxx is number of archive)*
+          > If You have all files you can extract files. 
+          >
+          > For example on windows with 7-Zip:
+          >> - Extract (GUI): `Open **$env:ISO_NAME.zip.001** in 7-Zip and extract.`
+          >> - Extract (CLI): `7z x $env:ISO_NAME.zip.001`
+          "@
+
+          ((Get-Content $env:GITHUB_STEP_SUMMARY) + "<br/>" + $rlsnfo) | Set-Content summary.md
           echo "build=$($iso.build)" >> $env:GITHUB_ENV
           echo "version=$($iso.version)" >> $env:GITHUB_ENV
           echo "name=$($iso.name)" >> $env:GITHUB_ENV
@@ -191,4 +213,6 @@ jobs:
           name: "${{ env.images }} ${{ inputs.architecture}} ${{ env.version }} (${{ env.build }})"
           body_path: summary.md
           draft: false
-          prerelease: false
+          prerelease: ${{ !contains(fromJson('["Windows 10 22H2","Windows 11 23H2","Windows 11 24H2"]'), inputs.architecture) }}
+          files: |
+            C:/output/*.zip.0*
