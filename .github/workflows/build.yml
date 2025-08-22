@@ -238,6 +238,7 @@ jobs:
           | Name | $finalImageName $($iso.version) |
           | Build | $($iso.build) |
           | Architecture | ${{ inputs.architecture }} |
+          $(if ($opts) { '| Build config | <ul>' + (($opts -split ' ') | ForEach-Object { "<li>$($_.TrimStart('-'))</li>" } -join '') + '</ul> |' }) 
           | Checksum | $($iso.checksum) |
           | Image Name | $finalImageName |
           | Iso | [$env:ISO_NAME]($env:ARTIFACT_URL) |
