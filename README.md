@@ -77,7 +77,7 @@ Additional options:
 
 ## Usage
 
-Get the latest Windows Server 2022 iso:
+Get the latest Windows 11 24H2 iso:
 
 ```bash
 powershell uup-dump-get-windows-iso.ps1 windows-11 c:/output -architecture x64 -edition pro -lang en-us -esd -drivers -netfx3
