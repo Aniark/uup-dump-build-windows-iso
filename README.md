@@ -6,12 +6,14 @@ This shrink wraps the [UUP dump](https://git.uupdump.net/uup-dump) project into 
 
 This can be executed in a Windows server 2022 x64 host or Windows 11 arm64.
 
-This supports the following Windows Editions:
+This supports the following Windows Builds:
 
-* `windows-11`: Windows 11 22631 (aka 23H2) Enterprise
-* `windows-2022`: Windows Server 2022 20348 (aka 21H2) Standard
-
-**NB** The Windows Server 2019 iso source files are not available in the Unified Update Platform (UUP) and cannot be downloaded by UUP dump.
+* `windows-10`: Windows 10 19045 (aka 22H2)
+* `windows-11old`: Windows 11 22631 (aka 23H2)
+* `windows-11`: Windows 11 26100 (aka 24H2)
+* `windows-11beta`: Windows 11 26120 (aka 24H2 BETA)
+* `windows-11beta`: Windows 11 26120 (aka 24H2 BETA)
+* `windows-11beta`: Windows 11 26120 (aka 24H2 BETA)
 
 ## Usage
 
@@ -22,36 +24,6 @@ powershell uup-dump-get-windows-iso.ps1 windows-2022
 ```
 
 When everything works correctly, you'll have the iso in the `output` directory at, e.g., `output/windows-2022.iso`.
-
-## Vagrant Usage
-
-Install the base [Windows 2022 box](https://github.com/rgl/windows-vagrant).
-
-Create the Windows ISO files using a vagrant managed VM:
-
-The ISO metadata is a JSON document alike:
-
-```json
-{
-    "name": "windows-2022",
-    "title": "Feature update to Microsoft server operating system, version 21H2 (20348.2322)",
-    "build": "20348.2322",
-    "checksum": "468f8ecdf2272e71c4dc0094d6379b60e5321bef15a01333dbf9508ae4d53a68",
-    "images": [
-        {
-            "index": 1,
-            "name": "Windows Server 2022 Standard (Desktop Experience)",
-            "version": "10.0.20348.2322"
-        }
-    ],
-    "uupDump": {
-        "downloadPackageUrl": "https://uupdump.net/get.php?edition=ServerStandard&pack=en-us&id=854d29b2-edbc-4959-a3e2-8a61f0900a7c",
-        "id": "854d29b2-edbc-4959-a3e2-8a61f0900a7c",
-        "downloadUrl": "https://uupdump.net/download.php?edition=ServerStandard&pack=en-us&id=854d29b2-edbc-4959-a3e2-8a61f0900a7c",
-        "apiUrl": "https://api.uupdump.net/get.php?lang=en-us&edition=ServerStandard&id=854d29b2-edbc-4959-a3e2-8a61f0900a7c"
-    }
-}
-```
 
 ## Tags structure
 
