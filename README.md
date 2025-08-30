@@ -1,4 +1,4 @@
-# About (OUTDATED)
+# About
 
 This creates an iso file with the latest Windows available from the [Unified Update Platform (UUP)](https://docs.microsoft.com/en-us/windows/deployment/update/windows-update-overview).
 
