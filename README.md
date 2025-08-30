@@ -85,7 +85,7 @@ Get the latest Windows 11 24H2 iso:
 powershell uup-dump-get-windows-iso.ps1 windows-11 c:/output -architecture x64 -edition pro -lang en-us -esd -drivers -netfx3
 ```
 
-When everything works correctly, you'll have the iso in the `output` directory at, e.g., `output/windows-2022.iso`.
+When everything works correctly, you'll have the iso in the `output` directory at, e.g., `c:/output/26200.5074.250826-1428.25H2_GE_RELEASE_SVC_PROD3_CLIENTPRO_OEMRET_X64FRE_PL-PL.ISO`.
 
 ## Tags structure
 
