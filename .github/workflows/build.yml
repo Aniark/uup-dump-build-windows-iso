@@ -353,8 +353,8 @@ jobs:
             $h = (Get-FileHash -Algorithm SHA256 $p.FullName).Hash.ToLowerInvariant()
             "$h  $($p.Name)"
           }
-          Set-Content -Path $partsShaPath -Value $partShaLines -Encoding ASCII
-          Set-Content -Path $isoShaPath   -Value ("${{ env.iso_checksum }}  ${{ env.ISO_NAME }}") -Encoding ASCII
+          Set-Content -Path $partsShaPath -Value $partShaLines -Encoding UTF8
+          Set-Content -Path $isoShaPath   -Value ("${{ env.iso_checksum }}  ${{ env.ISO_NAME }}") -Encoding UTF8
 
           $utils = Join-Path $ws "Utils"
 
