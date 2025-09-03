@@ -445,7 +445,7 @@ jobs:
               'EOF_PARTS',
               '',
               'cat > "${ISO_SHA}" << "EOF_ISO"',
-              '"${{ env.iso_checksum }}  ${{ env.ISO_NAME }}"',
+              '${{ env.iso_checksum }}  ${{ env.ISO_NAME }}',
               'EOF_ISO',
               '',
               'echo "Starting download parts with Aria2"',
