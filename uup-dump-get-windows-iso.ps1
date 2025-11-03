@@ -98,9 +98,9 @@ function Process-ProgressLine([string]$line) {
 # ------------------------------
 $arch = if ($architecture -eq "x64") { "amd64" } else { "arm64" }
 
-if ($windowsTargetName -match 'beta|dev|canary') {
+if ($windowsTargetName -match 'beta|dev|wif|canary') {
   $preview = $true
-  $ringLower = @('beta','dev','canary').Where({$windowsTargetName -match $_})[0]
+  $ringLower = @('beta','dev','wif','canary').Where({$windowsTargetName -match $_})[0]
 }
 
 function Get-EditionName($e) {
@@ -118,7 +118,7 @@ $TARGETS = @{
   "windows-11"       = @{ search="windows 11 26100 $arch"; edition=(Get-EditionName $edition) }
   "windows-11new"    = @{ search="windows 11 26200 $arch"; edition=(Get-EditionName $edition) }
   "windows-11beta"   = @{ search="windows 11 26120 $arch"; edition=(Get-EditionName $edition); ring="Beta" }
-  "windows-11dev"    = @{ search="windows 11 26200 $arch"; edition=(Get-EditionName $edition); ring="Dev" }
+  "windows-11dev"    = @{ search="windows 11 26220 $arch"; edition=(Get-EditionName $edition); ring="Wif" }
   "windows-11canary" = @{ search="windows 11 preview $arch"; edition=(Get-EditionName $edition); ring="Canary" }
 }
 
