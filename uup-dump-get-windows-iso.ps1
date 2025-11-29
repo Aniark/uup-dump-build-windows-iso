@@ -135,7 +135,7 @@ function Invoke-UupDumpApi([string]$name, [hashtable]$body) {
     }
     try {
       $qs = if ($body) { '?' + (New-QueryString $body) } else { '' }
-      return Invoke-RestMethod -Method Get -Uri ("https://api.uupdump.net/{0}.php{1}" -f $name, $qs)
+      return Invoke-RestMethod -Method Get -Uri ("https://api.uupdump.cn/{0}.php{1}" -f $name, $qs)
     } catch {
       Write-CleanLine "WARN: failed the uup-dump api $name request: $_"
     }
@@ -150,7 +150,7 @@ function Get-UupDumpIso($name, $target) {
   $result.response.builds.PSObject.Properties
   | ForEach-Object {
       $id = $_.Value.uuid
-      $uupDumpUrl = 'https://uupdump.net/selectlang.php?' + (New-QueryString @{ id = $id })
+      $uupDumpUrl = 'https://uupdump.cn/selectlang.php?' + (New-QueryString @{ id = $id })
       Write-CleanLine "Processing $name $id ($uupDumpUrl)"
       $_
     }
@@ -240,9 +240,9 @@ L7: Got editions={1}." -f (Get-EditionName $edition), ($editions -join ','))
         id                 = $id
         edition            = $target.edition
         virtualEdition     = $target['virtualEdition']
-        apiUrl             = 'https://api.uupdump.net/get.php?' + (New-QueryString @{ id = $id; lang = $lang; edition = if ($edition -eq "multi") { "core;professional" } else { $target.edition } })
-        downloadUrl        = 'https://uupdump.net/download.php?' + (New-QueryString @{ id = $id; pack = $lang; edition = if ($edition -eq "multi") { "core;professional" } else { $target.edition } })
-        downloadPackageUrl = 'https://uupdump.net/get.php?' + (New-QueryString @{ id = $id; pack = $lang; edition = if ($edition -eq "multi") { "core;professional" } else { $target.edition } })
+        apiUrl             = 'https://api.uupdump.cn/get.php?' + (New-QueryString @{ id = $id; lang = $lang; edition = if ($edition -eq "multi") { "core;professional" } else { $target.edition } })
+        downloadUrl        = 'https://uupdump.cn/download.php?' + (New-QueryString @{ id = $id; pack = $lang; edition = if ($edition -eq "multi") { "core;professional" } else { $target.edition } })
+        downloadPackageUrl = 'https://uupdump.cn/get.php?' + (New-QueryString @{ id = $id; pack = $lang; edition = if ($edition -eq "multi") { "core;professional" } else { $target.edition } })
       }
     }
 }
